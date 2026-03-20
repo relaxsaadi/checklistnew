@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✅ Checklist Titre de Séjour 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; color: #1a1a2e; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    text-align: center;
+    padding: 24px 20px 16px;
+  }
+  .header h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+  .header p { font-size: 0.85rem; opacity: 0.75; }
+
+  /* ALERTES */
+  .alerts {
+    background: #fff3cd;
+    border-left: 5px solid #ff9800;
+    padding: 12px 20px;
+    font-size: 0.82rem;
+    color: #7a4f00;
+    line-height: 1.8;
+  }
+  .alerts strong { color: #e65100; }
+
+  /* BARRE DE PROGRESSION */
+  .progress-bar-wrap {
+    background: #1a1a2e;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 0.85rem;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.3s;
+  }
+  #progress-text { min-width: 60px; text-align: right; font-weight: 700; color: #8BC34A; }
+
+  /* ===== ONGLETS HORIZONTAUX ===== */
+  .tabs-wrapper {
+    background: #16213e;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #e94560 #16213e;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 3px solid #e94560;
+  }
+  .tabs-wrapper::-webkit-scrollbar { height: 4px; }
+  .tabs-wrapper::-webkit-scrollbar-track { background: #16213e; }
+  .tabs-wrapper::-webkit-scrollbar-thumb { background: #e94560; border-radius: 4px; }
+
+  .tabs-bar {
+    display: flex;
+    flex-direction: row;       /* HORIZONTAL */
+    flex-wrap: nowrap;         /* PAS DE RETOUR À LA LIGNE */
+    align-items: center;
+    gap: 4px;
+    padding: 10px 12px;
+    min-width: max-content;    /* Force la largeur minimale */
+    width: max-content;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    flex-direction: row;       /* icône + texte côte à côte */
+    align-items: center;
+    gap: 5px;
+    padding: 9px 16px;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.08);
+    min-width: fit-content;
+  }
+  .tab-btn:hover {
+    transform: translateY(-2px);
+    color: white;
+    background: rgba(255,255,255,0.15);
+  }
+  .tab-btn.active {
+    color: white !important;
+    border-color: transparent !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  /* Couleurs individuelles */
+  .btn-etudiant.active   { background: #4CAF50; }
+  .btn-salarie.active    { background: #2196F3; }
+  .btn-entrepreneur.active { background: #FF9800; color: #1a1a2e !important; }
+  .btn-vieprivee.active  { background: #E91E63; }
+  .btn-visiteur.active   { background: #00BCD4; color: #1a1a2e !important; }
+  .btn-retraite.active   { background: #9C27B0; }
+  .btn-talent.active     { background: #FFD700; color: #1a1a2e !important; }
+  .btn-resident.active   { background: #F44336; }
+  .btn-ue.active         { background: #3F51B5; }
+  .btn-bpi.active        { background: #607D8B; }
+
+  /* CONTENU */
+  .tab-content { display: none; padding: 24px 20px; max-width: 860px; margin: 0 auto; }
+  .tab-content.active-content { display: block; }
+
+  /* CARTE CATÉGORIE */
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 12px 12px 0 0;
+    color: white;
+    margin-bottom: 0;
+  }
+  .cat-header .cat-icon { font-size: 2rem; }
+  .cat-header h2 { font-size: 1.4rem; font-weight: 800; }
+  .cat-header .cat-fee {
+    margin-left: auto;
+    background: rgba(255,255,255,0.25);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1rem;
+  }
+
+  .bg-etudiant   { background: linear-gradient(135deg, #388E3C, #66BB6A); }
+  .bg-salarie    { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+  .bg-entrepreneur { background: linear-gradient(135deg, #E65100, #FFA726); }
+  .bg-vieprivee  { background: linear-gradient(135deg, #AD1457, #F06292); }
+  .bg-visiteur   { background: linear-gradient(135deg, #00838F, #4DD0E1); }
+  .bg-retraite   { background: linear-gradient(135deg, #6A1B9A, #CE93D8); }
+  .bg-talent     { background: linear-gradient(135deg, #F57F17, #FFD54F); color: #1a1a2e !important; }
+  .bg-resident   { background: linear-gradient(135deg, #B71C1C, #EF5350); }
+  .bg-ue         { background: linear-gradient(135deg, #283593, #7986CB); }
+  .bg-bpi        { background: linear-gradient(135deg, #37474F, #90A4AE); }
+
+  /* SECTION */
+  .section-card {
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    background: #f8f9fa;
+    padding: 10px 18px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #555;
+    border-bottom: 1px solid #e9ecef;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-title.sub {
+    background: #fff8e1;
+    color: #795548;
+    border-left: 4px solid #FF9800;
+  }
+  .section-title.sub2 {
+    background: #fce4ec;
+    color: #880e4f;
+    border-left: 4px solid #E91E63;
+  }
+  .section-title.sub3 {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-left: 4px solid #2196F3;
+  }
+
+  /* ITEMS */
+  .item-list { list-style: none; padding: 8px 0; }
+  .item-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 18px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+  }
+  .item-list li:last-child { border-bottom: none; }
+  .item-list li:hover { background: #f9f9ff; }
+  .item-list li label {
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+    color: #333;
+  }
+  .item-list li input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #4CAF50;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .item-list li.checked label {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+
+  /* NOTE / ALERTE INLINE */
+  .note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    color: #7a4f00;
+    margin: 12px 18px;
+    border-radius: 0 6px 6px 0;
+  }
+  .note.danger { background: #fde8e8; border-color: #f44336; color: #b71c1c; }
+  .note.success { background: #e8f5e9; border-color: #4caf50; color: #1b5e20; }
+  .note.info { background: #e3f2fd; border-color: #2196F3; color: #0d47a1; }
+
+  /* ACTIONS */
+  .actions-bar {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .btn-reset { background: #FF5722; color: white; }
+  .btn-print { background: #607D8B; color: white; }
+  .btn-reset:hover { background: #D84315; transform: translateY(-1px); }
+  .btn-print:hover { background: #455A64; transform: translateY(-1px); }
+
+  /* OUTILS */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-top: 8px;
+  }
+  .tool-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #1a1a2e;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tool-card:hover {
+    background: #e3f2fd;
+    border-color: #2196F3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33,150,243,0.2);
+  }
+  .tool-card .tool-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tool-card .tool-name { font-weight: 700; }
+  .tool-card .tool-desc { font-size: 0.75rem; color: #777; }
+
+  @media print {
+    .tabs-wrapper, .actions-bar, .alerts { display: none; }
+    .tab-content { display: block !important; }
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.2rem; }
+    .tab-btn { font-size: 12px; padding: 8px 12px; }
+    .cat-header h2 { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- ===== STRATEGIX HEADER EMPLOYÉ ===== -->
+<div style="background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 60%,#0d6efd 100%);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <img src="https://www.genspark.ai/api/files/s/wOGuLKhl" alt="Strategix Assistance" style="height:60px;border-radius:10px;background:white;padding:4px;">
+    <div>
+      <div style="color:white;font-size:1.3rem;font-weight:900;letter-spacing:0.5px;">STRATEGIX ASSISTANCE</div>
+      <div style="color:#90caf9;font-size:0.78rem;font-weight:600;">Immigration France — Outil interne équipe</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span style="background:rgba(255,165,0,0.25);color:#FFD700;border:1.5px solid #FFD700;padding:5px 14px;border-radius:20px;font-size:0.75rem;font-weight:800;">🔒 USAGE INTERNE</span>
+    <a href="https://wa.me/message/RUDGNZVSJH3VE1" target="_blank" style="background:#25D366;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:0.8rem;font-weight:800;display:flex;align-items:center;gap:6px;">💬 WhatsApp</a>
+  </div>
+</div>
+
+
+<!-- ALERTES -->
+<div class="alerts">
+  ⚠️ <strong>Délais :</strong> Déposer <strong>2 à 4 mois</strong> avant expiration &nbsp;|&nbsp;
+  ⚠️ <strong>Retard :</strong> +180€ de pénalité (possible jusqu'à 6 mois après expiration) &nbsp;|&nbsp;
+  ⚠️ <strong>Jan. 2026 :</strong> Niveau <strong>A2 français + examen civique</strong> obligatoires pour 1ère carte pluriannuelle (sauf >65 ans) &nbsp;|&nbsp;
+  ⚠️ <strong>Juil. 2024 :</strong> Contrat d'engagement aux principes de la République obligatoire pour <strong>toutes</strong> catégories
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar-wrap">
+  <span>📊 Progression :</span>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <span id="progress-text">0%</span>
+  <span id="progress-count" style="opacity:0.7;font-size:0.8rem;"></span>
+</div>
+
+<!-- ===== BARRE D'ONGLETS HORIZONTALE ===== -->
+<div class="tabs-wrapper">
+  <div class="tabs-bar">
+    <button class="tab-btn btn-etudiant active" data-tab="etudiant" onclick="showTab('etudiant')">🎓 Étudiant</button>
+    <button class="tab-btn btn-salarie" data-tab="salarie" onclick="showTab('salarie')">💼 Salarié</button>
+    <button class="tab-btn btn-entrepreneur" data-tab="entrepreneur" onclick="showTab('entrepreneur')">🏢 Entrepreneur</button>
+    <button class="tab-btn btn-vieprivee" data-tab="vieprivee" onclick="showTab('vieprivee')">👨‍👩‍👧 Vie Privée</button>
+    <button class="tab-btn btn-visiteur" data-tab="visiteur" onclick="showTab('visiteur')">🏖️ Visiteur</button>
+    <button class="tab-btn btn-retraite" data-tab="retraite" onclick="showTab('retraite')">👴 Retraité</button>
+    <button class="tab-btn btn-talent" data-tab="talent" onclick="showTab('talent')">🌟 Passeport Talent</button>
+    <button class="tab-btn btn-resident" data-tab="resident" onclick="showTab('resident')">🏆 Résident 10ans</button>
+    <button class="tab-btn btn-ue" data-tab="ue" onclick="showTab('ue')">🌍 UE/EEE/Suisse</button>
+    <button class="tab-btn btn-bpi" data-tab="bpi" onclick="showTab('bpi')">🛡️ BPI</button>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : ÉTUDIANT ============================== -->
+<div id="etudiant" class="tab-content active-content">
+  <div class="section-card">
+    <div class="cat-header bg-etudiant">
+      <span class="cat-icon">🎓</span>
+      <div><h2>Étudiant / Stagiaire</h2><div style="font-size:0.8rem;opacity:0.9;">F2231 · 75€ · 1 à 4 ans</div></div>
+      <span class="cat-fee">75 €</span>
+    </div>
+    <div class="section-title">📋 Documents communs</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="e1"><label for="e1">Titre de séjour en cours de validité (recto-verso)</label></li>
+      <li><input type="checkbox" id="e2"><label for="e2">Passeport valide (toutes pages importantes : état civil, visas, cachets)</label></li>
+      <li><input type="checkbox" id="e3"><label for="e3">e-Photo numérique (~8€, code 22 chiffres, photographe ou cabine agréée ANTS)</label></li>
+      <li><input type="checkbox" id="e4"><label for="e4">Justificatif de domicile de moins de 6 mois (facture eau/gaz/élec/internet, quittance, bail, ou attestation hébergement)</label></li>
+      <li><input type="checkbox" id="e5"><label for="e5">Contrat d'engagement aux principes de la République (signé) — obligatoire depuis juil. 2024</label></li>
+      <li><input type="checkbox" id="e6"><label for="e6">Acte de naissance intégral (avec mentions récentes)</label></li>
+    </ul>
+    <div class="section-title">📚 Documents spécifiques étudiant</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="e7"><label for="e7">Certificat d'inscription ou attestation de pré-inscription (année en cours)</label></li>
+      <li><input type="checkbox" id="e8"><label for="e8">Relevés de notes de l'année écoulée</label></li>
+      <li><input type="checkbox" id="e9"><label for="e9">Dernier diplôme français obtenu</label></li>
+      <li><input type="checkbox" id="e10"><label for="e10">Attestation de réussite (si applicable)</label></li>
+      <li><input type="checkbox" id="e11"><label for="e11">Justificatif de programme de mobilité (si applicable)</label></li>
+    </ul>
+    <div class="section-title sub">💰 Ressources financières ≥ 615€/mois — choisir 1 option</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="e12"><label for="e12">🔵 Salarié : 3 derniers bulletins de salaire (fusionnés en 1 PDF)</label></li>
+      <li><input type="checkbox" id="e13"><label for="e13">🟢 Boursier : Attestation de bourse (Campus France ou autre)</label></li>
+      <li><input type="checkbox" id="e14"><label for="e14">🟠 Garant : Relevés bancaires + attestation sur l'honneur + pièce d'identité du garant</label></li>
+      <li><input type="checkbox" id="e15"><label for="e15">🟣 Ressources personnelles : relevé bancaire ≥ 7 380€ (615€ × 12)</label></li>
+    </ul>
+    <div class="note">💡 <strong>Fusion PDF :</strong> Utilisez <a href="https://www.ilovepdf.com/fr/fusionner_pdf" target="_blank" style="color:#1565C0;">iLovePDF</a> pour fusionner plusieurs documents en un seul fichier. Format accepté : .jpg, .pdf, .png, .tiff — max 10 Mo.</div>
+    <div class="note danger">⚠️ <strong>Dépôt tardif :</strong> +180€ de pénalité. L'accusé de réception ne remplace PAS le titre et ne permet PAS de voyager dans l'espace Schengen.</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : SALARIÉ ============================== -->
+<div id="salarie" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-salarie">
+      <span class="cat-icon">💼</span>
+      <div><h2>Salarié / Travailleur temporaire</h2><div style="font-size:0.8rem;opacity:0.9;">F15898 · 225€ · 1 à 4 ans</div></div>
+      <span class="cat-fee">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents communs à tous les cas</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="s1"><label for="s1">Titre de séjour en cours de validité</label></li>
+      <li><input type="checkbox" id="s2"><label for="s2">Passeport (pages état civil, dates validité, cachets d'entrée, visas)</label></li>
+      <li><input type="checkbox" id="s3"><label for="s3">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="s4"><label for="s4">3 photos d'identité ou code e-photo (si demande en ligne)</label></li>
+      <li><input type="checkbox" id="s5"><label for="s5">Justificatif de paiement du droit de timbre (225€)</label></li>
+      <li><input type="checkbox" id="s6"><label for="s6">Certificat médical OFII (à remettre lors de la délivrance du titre)</label></li>
+      <li><input type="checkbox" id="s7"><label for="s7">Contrat d'engagement aux principes de la République (signé)</label></li>
+    </ul>
+    <div class="section-title sub">🔵 Cas 1 — Vous occupez toujours le même emploi</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="s8"><label for="s8">Autorisation de travail correspondant au poste occupé</label></li>
+      <li><input type="checkbox" id="s9"><label for="s9">DSN (Déclaration Sociale Nominative) OU attestation d'activité des 12 derniers mois</label></li>
+      <li><input type="checkbox" id="s10"><label for="s10">Si particulier employeur : attestation de conformité Cesu</label></li>
+      <li><input type="checkbox" id="s11"><label for="s11">Attestation niveau A2 français (pour 1ère carte pluriannuelle)</label></li>
+      <li><input type="checkbox" id="s12"><label for="s12">Attestation de réussite à l'examen civique (pour 1ère carte pluriannuelle)</label></li>
+    </ul>
+    <div class="section-title sub2">🔴 Cas 2 — Vous n'avez plus d'emploi</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="s13"><label for="s13">Attestation de l'employeur précédent destinée à France Travail (justifiant la rupture du contrat)</label></li>
+      <li><input type="checkbox" id="s14"><label for="s14">Avis de situation individuelle établi par France Travail (Pôle emploi)</label></li>
+    </ul>
+    <div class="section-title sub3">🟠 Cas 3 — Vous avez changé d'emploi</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="s15"><label for="s15">Attestation de l'employeur précédent destinée à France Travail (justifiant la rupture)</label></li>
+      <li><input type="checkbox" id="s16"><label for="s16">Autorisation de travail dématérialisée délivrée au nouvel employeur</label></li>
+    </ul>
+    <div class="note info">💡 Payer le timbre fiscal en ligne : <a href="https://timbres.impots.gouv.fr/" target="_blank" style="color:#1565C0;">timbres.impots.gouv.fr</a></div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : ENTREPRENEUR ============================== -->
+<div id="entrepreneur" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-entrepreneur" style="color:#1a1a2e;">
+      <span class="cat-icon">🏢</span>
+      <div><h2>Entrepreneur / Profession libérale</h2><div style="font-size:0.8rem;opacity:0.8;">F19354 · 225€</div></div>
+      <span class="cat-fee" style="color:#1a1a2e;">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="en1"><label for="en1">Titre de séjour en cours de validité</label></li>
+      <li><input type="checkbox" id="en2"><label for="en2">Passeport valide (pages importantes)</label></li>
+      <li><input type="checkbox" id="en3"><label for="en3">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="en4"><label for="en4">e-Photo (code 22 chiffres)</label></li>
+      <li><input type="checkbox" id="en5"><label for="en5">Contrat d'engagement aux principes de la République (signé)</label></li>
+      <li><input type="checkbox" id="en6"><label for="en6">Justificatif de paiement du droit de timbre (225€)</label></li>
+      <li><input type="checkbox" id="en7"><label for="en7">Extrait Kbis ou extrait RNE (moins de 3 mois)</label></li>
+      <li><input type="checkbox" id="en8"><label for="en8">Justificatif d'inscription à l'URSSAF</label></li>
+      <li><input type="checkbox" id="en9"><label for="en9">Statuts de la société (si société constituée)</label></li>
+      <li><input type="checkbox" id="en10"><label for="en10">Justificatifs de ressources ≥ SMIC (~1 767€/mois)</label></li>
+      <li><input type="checkbox" id="en11"><label for="en11">3 dernières déclarations de revenus (si disponibles)</label></li>
+      <li><input type="checkbox" id="en12"><label for="en12">Justificatif d'activité professionnelle (contrats, factures, relevés CA)</label></li>
+      <li><input type="checkbox" id="en13"><label for="en13">Attestation d'assurance professionnelle (si profession réglementée)</label></li>
+      <li><input type="checkbox" id="en14"><label for="en14">Diplômes requis (si profession réglementée : avocat, médecin, architecte...)</label></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : VIE PRIVÉE ============================== -->
+<div id="vieprivee" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-vieprivee">
+      <span class="cat-icon">👨‍👩‍👧</span>
+      <div><h2>Vie Privée & Familiale</h2><div style="font-size:0.8rem;opacity:0.9;">F2209 · 225€ (gratuit pour victimes de violences)</div></div>
+      <span class="cat-fee">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents communs à TOUS les sous-cas</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp1"><label for="vp1">Acte de naissance intégral (copie intégrale avec mentions récentes)</label></li>
+      <li><input type="checkbox" id="vp2"><label for="vp2">Passeport ou justificatif de nationalité (carte d'identité, attestation consulaire...)</label></li>
+      <li><input type="checkbox" id="vp3"><label for="vp3">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="vp4"><label for="vp4">e-Photo (code 22 chiffres) ou 3 photos</label></li>
+      <li><input type="checkbox" id="vp5"><label for="vp5">Déclaration sur l'honneur de non-polygamie (si ressortissant d'un pays l'autorisant)</label></li>
+      <li><input type="checkbox" id="vp6"><label for="vp6">Certificat médical OFII</label></li>
+      <li><input type="checkbox" id="vp7"><label for="vp7">Contrat d'engagement aux principes de la République (signé)</label></li>
+    </ul>
+    <div class="section-title sub">💍 Sous-cas 1 — Conjoint(e) de ressortissant français</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp8"><label for="vp8">Copie intégrale de l'acte de mariage (ou transcription)</label></li>
+      <li><input type="checkbox" id="vp9"><label for="vp9">Justificatif de nationalité française du/de la conjoint(e)</label></li>
+      <li><input type="checkbox" id="vp10"><label for="vp10">Justificatif de communauté de vie (déclaration sur l'honneur, bail, quittance, factures, RIB joint)</label></li>
+      <li><input type="checkbox" id="vp11"><label for="vp11">Si vie commune rompue : acte de décès / dépôt de plainte / jugement de divorce</label></li>
+    </ul>
+    <div class="section-title sub">👶 Sous-cas 2 — Parent d'enfant français</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp12"><label for="vp12">Acte de naissance de l'enfant français (avec filiation)</label></li>
+      <li><input type="checkbox" id="vp13"><label for="vp13">Justificatif de résidence de l'enfant en France (certificat de scolarité, etc.)</label></li>
+      <li><input type="checkbox" id="vp14"><label for="vp14">Justificatif de nationalité française de l'enfant</label></li>
+      <li><input type="checkbox" id="vp15"><label for="vp15">Preuves de contribution à l'entretien et l'éducation ≥ 2 ans (pensions, factures, témoignages)</label></li>
+    </ul>
+    <div class="section-title sub3">🇪🇺 Sous-cas 3 — Conjoint de résident longue durée UE</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp16"><label for="vp16">Carte de séjour de l'époux/épouse</label></li>
+      <li><input type="checkbox" id="vp17"><label for="vp17">Justificatif de résidence régulière dans le pays membre ayant accordé le statut</label></li>
+      <li><input type="checkbox" id="vp18"><label for="vp18">Justificatifs de ressources personnelles</label></li>
+      <li><input type="checkbox" id="vp19"><label for="vp19">Justificatif d'assurance maladie</label></li>
+    </ul>
+    <div class="section-title sub2">👥 Sous-cas 4 — Liens personnels et familiaux</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp20"><label for="vp20">Justificatifs des liens familiaux (actes de mariage, naissance, filiation...)</label></li>
+      <li><input type="checkbox" id="vp21"><label for="vp21">Justificatifs de séjour régulier des membres de la famille en France</label></li>
+      <li><input type="checkbox" id="vp22"><label for="vp22">Preuves d'entretien des relations (courriers, photos, transferts d'argent...)</label></li>
+      <li><input type="checkbox" id="vp23"><label for="vp23">Justificatifs de ressources et d'insertion dans la société française (contrats, fiches de paie)</label></li>
+    </ul>
+    <div class="section-title sub">🚨 Sous-cas 5 — Victimes de violences / traite des êtres humains</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vp24"><label for="vp24">Ordonnance de protection ou dépôt de plainte</label></li>
+      <li><input type="checkbox" id="vp25"><label for="vp25">Certificat médical OFII</label></li>
+      <li><input type="checkbox" id="vp26"><label for="vp26">Justificatifs de la situation de violence</label></li>
+    </ul>
+    <div class="note success">✅ <strong>Gratuit</strong> pour les victimes de violences conjugales ou de traite des êtres humains.</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : VISITEUR ============================== -->
+<div id="visiteur" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-visiteur" style="color:#1a1a2e;">
+      <span class="cat-icon">🏖️</span>
+      <div><h2>Visiteur / Inactif</h2><div style="font-size:0.8rem;opacity:0.8;">F302 · 225€ · 1 an renouvelable</div></div>
+      <span class="cat-fee" style="color:#1a1a2e;">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="vi1"><label for="vi1">Visa de long séjour ou titre de séjour en cours de validité</label></li>
+      <li><input type="checkbox" id="vi2"><label for="vi2">Copie intégrale d'acte de naissance (avec mentions récentes)</label></li>
+      <li><input type="checkbox" id="vi3"><label for="vi3">Passeport (ou attestation consulaire / carte d'identité / carte consulaire)</label></li>
+      <li><input type="checkbox" id="vi4"><label for="vi4">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="vi5"><label for="vi5">Contrat d'engagement aux principes de la République (signé)</label></li>
+      <li><input type="checkbox" id="vi6"><label for="vi6">e-Photo (code 22 chiffres)</label></li>
+      <li><input type="checkbox" id="vi7"><label for="vi7">Certificat médical OFII (à remettre lors de la délivrance)</label></li>
+      <li><input type="checkbox" id="vi8"><label for="vi8">Justificatifs de ressources ≥ 17 317,39€/an (≈ 1 443,11€/mois) : attestations bancaires, pensions, cautions...</label></li>
+      <li><input type="checkbox" id="vi9"><label for="vi9">Si pris en charge par un tiers : ressources du garant + attestation de prise en charge + carte d'identité du garant</label></li>
+      <li><input type="checkbox" id="vi10"><label for="vi10">Attestation sur l'honneur MANUSCRITE de ne pas travailler en France</label></li>
+      <li><input type="checkbox" id="vi11"><label for="vi11">Attestation d'assurance maladie couvrant toute la durée du séjour</label></li>
+      <li><input type="checkbox" id="vi12"><label for="vi12">Justificatif de paiement de la taxe : 225€ (200€ taxe + 25€ timbre)</label></li>
+    </ul>
+    <div class="note danger">⚠️ <strong>Interdit de travailler</strong> en France avec ce titre. Ressources minimum vérifiées au 01/01/2026 : <strong>1 443,11€/mois</strong>.</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : RETRAITÉ ============================== -->
+<div id="retraite" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-retraite">
+      <span class="cat-icon">👴</span>
+      <div><h2>Retraité / Conjoint de retraité</h2><div style="font-size:0.8rem;opacity:0.9;">F2710 · 25€ seulement · 10 ans</div></div>
+      <span class="cat-fee">25 € !</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="r1"><label for="r1">Passeport (ou attestation consulaire / carte d'identité / certificat de nationalité < 6 mois)</label></li>
+      <li><input type="checkbox" id="r2"><label for="r2">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="r3"><label for="r3">Justificatif de résidence habituelle HORS de France (quittance loyer, électricité, gaz...)</label></li>
+      <li><input type="checkbox" id="r4"><label for="r4">Certificat de résidence habituelle hors de France (établi par les autorités municipales du pays)</label></li>
+      <li><input type="checkbox" id="r5"><label for="r5">3 photos d'identité (ou code e-photo si demande en ligne)</label></li>
+      <li><input type="checkbox" id="r6"><label for="r6">Déclaration sur l'honneur de non-polygamie (si marié et pays l'autorisant)</label></li>
+      <li><input type="checkbox" id="r7"><label for="r7">Justificatif de résidence régulière antérieure en France avec une carte de résident</label></li>
+      <li><input type="checkbox" id="r8"><label for="r8">Dernier avis de paiement de pension de retraite — régime de base UNIQUEMENT (Arrco/complémentaire EXCLUE)</label></li>
+      <li><input type="checkbox" id="r9"><label for="r9">Contrat d'engagement aux principes de la République (signé)</label></li>
+    </ul>
+    <div class="note success">✅ <strong>Seulement 25€</strong> (droit de timbre uniquement). Validité <strong>10 ans</strong>.</div>
+    <div class="note info">ℹ️ <strong>Conditions :</strong> Avoir possédé une carte de résident en France · Percevoir une pension de retraite d'un régime de base français · Résider habituellement à l'étranger.</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : PASSEPORT TALENT ============================== -->
+<div id="talent" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-talent" style="color:#1a1a2e;">
+      <span class="cat-icon">🌟</span>
+      <div><h2>Passeport Talent / Carte Talent</h2><div style="font-size:0.8rem;opacity:0.8;">F16922 · 225€ · 4 ans</div></div>
+      <span class="cat-fee" style="color:#1a1a2e;">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents communs à TOUS les profils</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t1"><label for="t1">Visa de long séjour ou titre de séjour en cours de validité</label></li>
+      <li><input type="checkbox" id="t2"><label for="t2">Passeport valide (toutes pages importantes)</label></li>
+      <li><input type="checkbox" id="t3"><label for="t3">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="t4"><label for="t4">e-Photo (code 22 chiffres) — sauf profil médical (voir ci-dessous)</label></li>
+      <li><input type="checkbox" id="t5"><label for="t5">Contrat d'engagement aux principes de la République (signé)</label></li>
+    </ul>
+    <div class="section-title sub">💼 Profil 1 — Salarié qualifié (salaire ≥ 2× SMIC = ~39 582€/an)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t6"><label for="t6">Diplôme niveau Master minimum</label></li>
+      <li><input type="checkbox" id="t7"><label for="t7">Attestation employeur (fonctions, durée, rémunération)</label></li>
+    </ul>
+    <div class="section-title sub">🏭 Profil 2 — Salarié d'une entreprise innovante</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t8"><label for="t8">Attestation Ministère de l'économie (caractère innovant) OU document fiscal JEI</label></li>
+      <li><input type="checkbox" id="t9"><label for="t9">Attestation employeur</label></li>
+    </ul>
+    <div class="section-title sub">✈️ Profil 3 — Salarié en mission (ICT)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t10"><label for="t10">Certificat de détachement sécurité sociale</label></li>
+      <li><input type="checkbox" id="t11"><label for="t11">Lettre détaillant les fonctions et l'objet de la mission</label></li>
+      <li><input type="checkbox" id="t12"><label for="t12">Attestation employeur + justificatif d'ancienneté ≥ 3 mois dans le groupe</label></li>
+    </ul>
+    <div class="section-title sub3">🔵 Profil 4 — Carte Bleue Européenne (≥ 3× SMIC = ~59 373€/an)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t13"><label for="t13">Attestation employeur (contrat, rémunération)</label></li>
+      <li><input type="checkbox" id="t14"><label for="t14">Diplôme Bac+3 minimum OU 5 ans d'expérience professionnelle (ou 3 ans si profession spécifique)</label></li>
+    </ul>
+    <div class="section-title sub">🔬 Profil 5 — Chercheur / Scientifique</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t15"><label for="t15">Diplôme de niveau Master minimum</label></li>
+      <li><input type="checkbox" id="t16"><label for="t16">Convention d'accueil signée par l'établissement de recherche</label></li>
+    </ul>
+    <div class="section-title sub">🚀 Profil 6 — Créateur d'entreprise (investissement ≥ 30 000€)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t17"><label for="t17">Diplôme Master ou 5 ans d'expérience</label></li>
+      <li><input type="checkbox" id="t18"><label for="t18">Extrait de casier judiciaire</label></li>
+      <li><input type="checkbox" id="t19"><label for="t19">Justificatif d'investissement ≥ 30 000€</label></li>
+      <li><input type="checkbox" id="t20"><label for="t20">Justificatifs de ressources ≥ SMIC (~1 767€/mois)</label></li>
+      <li><input type="checkbox" id="t21"><label for="t21">Justificatif d'immatriculation (Kbis ou RNE)</label></li>
+      <li><input type="checkbox" id="t22"><label for="t22">Avis favorable du Ministère de l'économie</label></li>
+    </ul>
+    <div class="section-title sub">💡 Profil 7 — Projet innovant (label French Tech, etc.)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t23"><label for="t23">Avis favorable du Ministère de l'économie</label></li>
+      <li><input type="checkbox" id="t24"><label for="t24">Justificatifs de ressources ≥ SMIC</label></li>
+    </ul>
+    <div class="section-title sub">💰 Profil 8 — Investisseur (≥ 300 000€)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t25"><label for="t25">Justificatifs de direction / détention capital ≥ 30%</label></li>
+      <li><input type="checkbox" id="t26"><label for="t26">Justificatifs de création ou sauvegarde d'emploi</label></li>
+      <li><input type="checkbox" id="t27"><label for="t27">Lettre d'engagement (plan d'affaires détaillé)</label></li>
+      <li><input type="checkbox" id="t28"><label for="t28">Justificatif d'investissement ≥ 300 000€</label></li>
+    </ul>
+    <div class="section-title sub2">🏛️ Profil 9 — Mandataire social (≥ 3× SMIC = ~65 629€/an)</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t29"><label for="t29">Justificatif de fonction (PV d'AG, Kbis mentionnant la fonction)</label></li>
+      <li><input type="checkbox" id="t30"><label for="t30">Justificatif d'ancienneté ≥ 3 mois dans le groupe</label></li>
+      <li><input type="checkbox" id="t31"><label for="t31">Justificatifs de ressources ≥ 3× SMIC</label></li>
+    </ul>
+    <div class="section-title sub">🎨 Profil 10 — Artiste / Profession artistique</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t32"><label for="t32">Justificatifs de ressources ≥ 70% SMIC (dont 51% d'origine artistique)</label></li>
+      <li><input type="checkbox" id="t33"><label for="t33">Justificatifs de contrats cumulés ≥ 3 mois</label></li>
+      <li><input type="checkbox" id="t34"><label for="t34">Documents prouvant la qualité d'artiste (presse, expo, RACD...)</label></li>
+    </ul>
+    <div class="section-title sub">⭐ Profil 11 — Renommée nationale / internationale</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t35"><label for="t35">Justificatifs de ressources ≥ SMIC</label></li>
+      <li><input type="checkbox" id="t36"><label for="t36">Documents établissant la notoriété (articles, prix, distinctions...)</label></li>
+      <li><input type="checkbox" id="t37"><label for="t37">Justificatif de la nature et durée du projet en France</label></li>
+    </ul>
+    <div class="section-title sub3">⚕️ Profil 12 — Professions médicales / pharmacie</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="t38"><label for="t38">3 photos d'identité (⚠️ PAS de e-photo pour ce profil spécifique)</label></li>
+      <li><input type="checkbox" id="t39"><label for="t39">Attestation employeur (établissement de santé)</label></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : RÉSIDENT 10 ANS ============================== -->
+<div id="resident" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-resident">
+      <span class="cat-icon">🏆</span>
+      <div><h2>Carte de Résident — 10 ans</h2><div style="font-size:0.8rem;opacity:0.9;">F2208 · 225€ · 10 ans</div></div>
+      <span class="cat-fee">225 €</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="re1"><label for="re1">Passeport (ou attestation consulaire / carte d'identité / certificat de nationalité < 6 mois)</label></li>
+      <li><input type="checkbox" id="re2"><label for="re2">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="re3"><label for="re3">e-Photo (code 22 chiffres)</label></li>
+      <li><input type="checkbox" id="re4"><label for="re4">Certificat médical OFII (à remettre lors de la délivrance)</label></li>
+      <li><input type="checkbox" id="re5"><label for="re5">Déclaration sur l'honneur de non-polygamie (si concerné)</label></li>
+      <li><input type="checkbox" id="re6"><label for="re6">Contrat d'engagement aux principes de la République (signé)</label></li>
+      <li><input type="checkbox" id="re7"><label for="re7">Preuve de niveau B1 français (diplôme, test officiel ou attestation linguistique) — pour 1ère carte</label></li>
+      <li><input type="checkbox" id="re8"><label for="re8">Attestation de réussite à l'examen civique mention "carte de résident" — pour 1ère carte</label></li>
+      <li><input type="checkbox" id="re9"><label for="re9">Titre de séjour en cours de validité ou visa valide</label></li>
+      <li><input type="checkbox" id="re10"><label for="re10">Décision OFPRA / CNDA (si statut de réfugié)</label></li>
+      <li><input type="checkbox" id="re11"><label for="re11">Acte de mariage (si conjoint de résident)</label></li>
+      <li><input type="checkbox" id="re12"><label for="re12">Autorisation de regroupement familial (si applicable)</label></li>
+      <li><input type="checkbox" id="re13"><label for="re13">Justificatifs de ressources et d'insertion professionnelle en France</label></li>
+    </ul>
+    <div class="note success">✅ <strong>Gratuit</strong> pour apatrides et bénéficiaires de la protection subsidiaire.</div>
+    <div class="note info">ℹ️ Dépôt entre <strong>4 mois et 2 mois</strong> avant expiration, via portail ANEF. Coût : 225€ (200€ taxe + 25€ timbre).</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : UE/EEE/SUISSE ============================== -->
+<div id="ue" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-ue">
+      <span class="cat-icon">🌍</span>
+      <div><h2>Citoyen UE / EEE / Suisse</h2><div style="font-size:0.8rem;opacity:0.9;">F16003 · GRATUIT · jusqu'à 5 ans</div></div>
+      <span class="cat-fee">GRATUIT</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="ue1"><label for="ue1">Pièce d'identité ou passeport en cours de validité du pays UE/EEE/Suisse</label></li>
+      <li><input type="checkbox" id="ue2"><label for="ue2">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="ue3"><label for="ue3">e-Photo (code 22 chiffres)</label></li>
+      <li><input type="checkbox" id="ue4"><label for="ue4">Contrat d'engagement aux principes de la République (signé)</label></li>
+      <li><input type="checkbox" id="ue5"><label for="ue5">Pour salarié : attestation d'emploi ou contrat de travail</label></li>
+      <li><input type="checkbox" id="ue6"><label for="ue6">Pour indépendant : extrait RNE, contrats, factures justifiant l'activité</label></li>
+    </ul>
+    <div class="note success">✅ <strong>Entièrement gratuit.</strong> Validité : CDD/activité → jusqu'à 5 ans | CDI → 5 ans | Indépendant → 5 ans.</div>
+  </div>
+</div>
+
+<!-- ============================== ONGLET : BPI ============================== -->
+<div id="bpi" class="tab-content">
+  <div class="section-card">
+    <div class="cat-header bg-bpi">
+      <span class="cat-icon">🛡️</span>
+      <div><h2>Protection Internationale (BPI)</h2><div style="font-size:0.8rem;opacity:0.9;">GRATUIT · Validité variable</div></div>
+      <span class="cat-fee">GRATUIT</span>
+    </div>
+    <div class="section-title">📋 Documents requis</div>
+    <ul class="item-list">
+      <li><input type="checkbox" id="b1"><label for="b1">Décision OFPRA ou CNDA accordant la protection (réfugié ou protection subsidiaire)</label></li>
+      <li><input type="checkbox" id="b2"><label for="b2">Passeport ou titre de voyage (si disponible)</label></li>
+      <li><input type="checkbox" id="b3"><label for="b3">Justificatif de domicile de moins de 6 mois</label></li>
+      <li><input type="checkbox" id="b4"><label for="b4">e-Photo (code 22 chiffres)</label></li>
+      <li><input type="checkbox" id="b5"><label for="b5">Acte de naissance (si disponible) ou déclaration sur l'honneur</label></li>
+    </ul>
+    <div class="note success">✅ <strong>Entièrement gratuit.</strong> La validité varie selon la protection accordée (réfugié ou subsidiaire).</div>
+  </div>
+</div>
+
+<!-- ============================== OUTILS PRATIQUES ============================== -->
+<div style="max-width:860px;margin:0 auto;padding:0 20px 20px;">
+  <h3 style="margin:28px 0 14px;font-size:1.1rem;color:#1a1a2e;">🔧 Outils Pratiques — Liens Officiels</h3>
+  <div class="tools-grid">
+    <a href="https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/#/" target="_blank" class="tool-card">
+      <span class="tool-icon">🖥️</span>
+      <div><div class="tool-name">Portail ANEF</div><div class="tool-desc">Déposer votre demande en ligne</div></div>
+    </a>
+    <a href="https://www.ilovepdf.com/fr/fusionner_pdf" target="_blank" class="tool-card">
+      <span class="tool-icon">📄</span>
+      <div><div class="tool-name">Fusionner PDF</div><div class="tool-desc">iLovePDF — gratuit</div></div>
+    </a>
+    <a href="https://www.sejda.com/fr/sign-pdf" target="_blank" class="tool-card">
+      <span class="tool-icon">✍️</span>
+      <div><div class="tool-name">Signer PDF</div><div class="tool-desc">Sejda — en ligne</div></div>
+    </a>
+    <a href="https://timbres.impots.gouv.fr/" target="_blank" class="tool-card">
+      <span class="tool-icon">💳</span>
+      <div><div class="tool-name">Timbres Fiscaux</div><div class="tool-desc">impots.gouv.fr</div></div>
+    </a>
+    <a href="https://permisdeconduire.ants.gouv.fr/services/geolocaliser-les-photographes-habilites" target="_blank" class="tool-card">
+      <span class="tool-icon">📸</span>
+      <div><div class="tool-name">Trouver e-Photo</div><div class="tool-desc">Photographes agréés ANTS</div></div>
+    </a>
+    <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/R45936" target="_blank" class="tool-card">
+      <span class="tool-icon">🌐</span>
+      <div><div class="tool-name">Traducteurs agréés</div><div class="tool-desc">Liste officielle</div></div>
+    </a>
+    <a href="https://www.francetravail.fr/accueil/" target="_blank" class="tool-card">
+      <span class="tool-icon">💼</span>
+      <div><div class="tool-name">France Travail</div><div class="tool-desc">Anciennement Pôle emploi</div></div>
+    </a>
+    <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/N110" target="_blank" class="tool-card">
+      <span class="tool-icon">📰</span>
+      <div><div class="tool-name">Source officielle N110</div><div class="tool-desc">Service-Public.fr</div></div>
+    </a>
+    <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/R49486" target="_blank" class="tool-card">
+      <span class="tool-icon">💰</span>
+      <div><div class="tool-name">Timbre Étranger</div><div class="tool-desc">Payer en ligne</div></div>
+    </a>
+    <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/R59398" target="_blank" class="tool-card">
+      <span class="tool-icon">📅</span>
+      <div><div class="tool-name">Renouveler en ligne</div><div class="tool-desc">ANEF — Service-Public</div></div>
+    </a>
+  </div>
+</div>
+
+<!-- BARRE D'ACTIONS -->
+<div class="actions-bar">
+  <button class="btn-action btn-reset" onclick="resetAll()">🔄 Tout réinitialiser</button>
+  <button class="btn-action btn-print" onclick="window.print()">🖨️ Imprimer</button>
+  <span style="margin-left:auto;font-size:0.8rem;color:#888;">© 2026 — Source : Service-Public.fr N110 · ANEF · Ministère de l'Intérieur</span>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+function showTab(tabId) {
+  // Cacher tous les contenus
+  var contents = document.querySelectorAll('.tab-content');
+  for (var i = 0; i < contents.length; i++) {
+    contents[i].style.display = 'none';
+    contents[i].classList.remove('active-content');
+  }
+  // Désactiver tous les boutons
+  var buttons = document.querySelectorAll('.tab-btn');
+  for (var j = 0; j < buttons.length; j++) {
+    buttons[j].classList.remove('active');
+  }
+  // Afficher le contenu choisi
+  var target = document.getElementById(tabId);
+  if (target) {
+    target.style.display = 'block';
+    target.classList.add('active-content');
+  }
+  // Activer le bouton choisi
+  var activeBtn = document.querySelector('[data-tab="' + tabId + '"]');
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
+}
+
+function updateProgress() {
+  var all = document.querySelectorAll('input[type="checkbox"]');
+  var checked = document.querySelectorAll('input[type="checkbox"]:checked');
+  var pct = all.length > 0 ? Math.round((checked.length / all.length) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = pct + '%';
+  document.getElementById('progress-count').textContent = '(' + checked.length + '/' + all.length + ')';
+}
+
+function resetAll() {
+  if (confirm('Réinitialiser toutes les cases ? Cette action effacera votre progression.')) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = false;
+      var li = checkboxes[i].closest('li');
+      if (li) li.classList.remove('checked');
+    }
+    updateProgress();
+  }
+}
+
+// Ajouter les event listeners sur les checkboxes
+document.addEventListener('DOMContentLoaded', function() {
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('change', function() {
+      var li = this.closest('li');
+      if (li) {
+        if (this.checked) li.classList.add('checked');
+        else li.classList.remove('checked');
+      }
+      updateProgress();
+    });
+  }
+  // Afficher l'onglet étudiant par défaut
+  showTab('etudiant');
+  updateProgress();
+});
+</script>
+
+
+<!-- FOOTER INTERNE -->
+<div style="background:#0a1628;color:#90caf9;text-align:center;padding:18px;font-size:0.78rem;margin-top:30px;">
+  <div style="margin-bottom:6px;">
+    <strong style="color:white;">STRATEGIX ASSISTANCE</strong> — Immigration France
+  </div>
+  <div style="opacity:0.7;">Document confidentiel — Usage interne uniquement · Sources : Service-Public.fr, ANEF, Ministère de l'Intérieur · 2026</div>
+</div>
+
+</body>
+</html>
